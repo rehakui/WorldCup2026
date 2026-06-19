@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="W杯2026">
+<title>FIFAワールドカップ2026 放送スケジュール</title>
+<style>
+:root{
+  --bg:#f5f4f0;
+  --card:#ffffff;
+  --text:#1a1a1a;
+  --text-sub:#6b6a66;
+  --border:rgba(0,0,0,0.1);
+  --accent-bg:#e6f1fb;
+  --accent-text:#0c447c;
+  --b-nhk-bg:#E6F1FB; --b-nhk-text:#0C447C;
+  --b-bs-bg:#EEEDFE; --b-bs-text:#3C3489;
+  --b-ntv-bg:#EAF3DE; --b-ntv-text:#27500A;
+  --b-fuji-bg:#FAEEDA; --b-fuji-text:#633806;
+  --b-dazn-bg:#EFEEE9; --b-dazn-text:#444441;
+  --b-japan-bg:#FCEBEB; --b-japan-text:#791F1F;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#000000;
+    --card:#1c1c1e;
+    --text:#f2f2f2;
+    --text-sub:#9b9b9b;
+    --border:rgba(255,255,255,0.12);
+    --accent-bg:#0c447c;
+    --accent-text:#e6f1fb;
+    --b-nhk-bg:#0C447C; --b-nhk-text:#E6F1FB;
+    --b-bs-bg:#3C3489; --b-bs-text:#EEEDFE;
+    --b-ntv-bg:#27500A; --b-ntv-text:#EAF3DE;
+    --b-fuji-bg:#633806; --b-fuji-text:#FAEEDA;
+    --b-dazn-bg:#3a3a3c; --b-dazn-text:#d6d6d6;
+    --b-japan-bg:#791F1F; --b-japan-text:#FCEBEB;
+  }
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Hiragino Kaku Gothic ProN",sans-serif;}
+body{padding:env(safe-area-inset-top) 14px calc(env(safe-area-inset-bottom) + 24px) 14px;font-size:14px;line-height:1.5}
+header{padding:14px 0 10px;position:sticky;top:0;background:var(--bg);z-index:10}
+h1{font-size:18px;font-weight:600;margin-bottom:2px}
+.updated{font-size:11px;color:var(--text-sub);margin-bottom:12px}
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.filters button{font-size:13px;padding:7px 12px;border-radius:18px;border:1px solid var(--border);background:var(--card);color:var(--text-sub)}
+.filters button.active{background:var(--accent-bg);color:var(--accent-text);border-color:var(--accent-bg);font-weight:600}
+input[type=text]{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:10px;background:var(--card);color:var(--text);font-size:14px;margin-bottom:10px;-webkit-appearance:none}
+input[type=text]:focus{outline:none;border-color:var(--accent-text)}
+.count{font-size:12px;color:var(--text-sub);margin-bottom:10px}
+.stage-title{font-size:17px;font-weight:600;margin:18px 0 6px}
+.date-head{font-size:12px;font-weight:600;color:var(--text-sub);margin:14px 0 6px;padding-bottom:4px;border-bottom:1px solid var(--border)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:11px 13px;margin-bottom:8px}
+.card.japan{border:2px solid var(--accent-text)}
+.row1{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px}
+.time{font-size:15px;font-weight:600}
+.venue{font-size:11px;color:var(--text-sub)}
+.teams{font-size:15px;margin-bottom:7px}
+.teams .vs{color:var(--text-sub);font-size:12px;margin:0 5px}
+.badges{display:flex;flex-wrap:wrap;gap:5px}
+.badge{font-size:11px;padding:3px 8px;border-radius:7px;font-weight:600;white-space:nowrap}
+.b-nhk{background:var(--b-nhk-bg);color:var(--b-nhk-text)}
+.b-bs{background:var(--b-bs-bg);color:var(--b-bs-text)}
+.b-ntv{background:var(--b-ntv-bg);color:var(--b-ntv-text)}
+.b-fuji{background:var(--b-fuji-bg);color:var(--b-fuji-text)}
+.b-dazn{background:var(--b-dazn-bg);color:var(--b-dazn-text)}
+.b-japan{background:var(--b-japan-bg);color:var(--b-japan-text)}
+.no-results{padding:24px;text-align:center;color:var(--text-sub)}
+.note{font-size:11px;color:var(--text-sub);margin-top:18px;padding-top:12px;border-top:1px solid var(--border)}
+</style>
+</head>
+<body>
+<header>
+<h1>FIFAワールドカップ2026 放送スケジュール</h1>
+<div class="updated">日本時間 / 2026年6月16日時点の情報</div>
+<div class="filters" id="stageFilter">
+  <button class="active" data-stage="all">すべて</button>
+  <button data-stage="japan">日本戦</button>
+  <button data-stage="nhk">NHK</button>
+  <button data-stage="group">グループ</button>
+  <button data-stage="knockout">決勝T</button>
+</div>
+<input type="text" id="search" placeholder="チーム名で検索...">
+<div class="count" id="count"></div>
+</header>
+<div id="list"></div>
+<div class="no-results" id="noResults" style="display:none">該当する試合がありません</div>
+<div class="note">放送：NHK = NHK総合 / BSP4K = NHK BSプレミアム4K / 日テレ = 日本テレビ系 / フジ = フジテレビ系 / DAZN = ネット配信。決勝トーナメントの対戦カードは進出チーム確定後に決まります。</div>
+
+<script>
+const matches=[
+{no:1,date:"6/12(金)",time:"4:00",home:"メキシコ",away:"南アフリカ",venue:"メキシコシティ",stage:"group",broadcast:["NHK","BSP4K","DAZN"]},
+{no:2,date:"6/12(金)",time:"11:00",home:"韓国",away:"チェコ",venue:"グアダラハラ",stage:"group",broadcast:["DAZN"]},
+{no:3,date:"6/13(土)",time:"4:00",home:"カナダ",away:"ボスニア・ヘルツェゴビナ",venue:"トロント",stage:"group",broadcast:["NHK","BSP4K","DAZN"]},
+{no:4,date:"6/13(土)",time:"10:00",home:"アメリカ",away:"パラグアイ",venue:"ロサンゼルス",stage:"group",broadcast:["DAZN"]},
+{no:5,date:"6/14(日)",time:"4:00",home:"カタール",away:"スイス",venue:"サンフランシスコ",stage:"group",broadcast:["DAZN"]},
+{no:6,date:"6/14(日)",time:"7:00",home:"ブラジル",away:"モロッコ",venue:"ボストン",stage:"group",broadcast:["DAZN"]},
+{no:7,date:"6/14(日)",time:"10:00",home:"ハイチ",away:"スコットランド",venue:"ニュージャージー",stage:"group",broadcast:["NHK","BSP4K","DAZN"]},
+{no:8,date:"6/14(日)",time:"13:00",home:"オーストラリア",away:"トルコ",venue:"バンクーバー",stage:"group",broadcast:["日本テレビ","DAZN"]},
+{no:9,date:"6/15(月)",time:"2:00",home:"ドイツ",away:"キュラソー",venue:"フィラデルフィア",stage:"group",broadcast:["DAZN"]},
+{no:10,date:"6/15(月)",time:"5:00",home:"オランダ",away:"日本",venue:"ダラス",stage:"group",japan:true,broadcast:["NHK","BSP4K","DAZN"]},
+{no:11,date:"6/15(月)",time:"8:00",home:"コートジボワール",away:"エクアドル",venue:"ヒューストン",stage:"group",broadcast:["DAZN"]},
+{no:12,date:"6/15(月)",time:"11:00",home:"スウェーデン",away:"チュニジア",venue:"モンテレー",stage:"group",broadcast:["日本テレビ","DAZN"]},
+{no:13,date:"6/16(火)",time:"1:00",home:"スペイン",away:"カーボベルデ",venue:"マイアミ",stage:"group",broadcast:["NHK","BSP4K","DAZN"]},
+{no:14,date:"6/16(火)",time:"4:00",home:"ベルギー",away:"エジプト",venue:"ロサンゼルス",stage:"group",broadcast:["NHK","BSP4K","DAZN"]},
+{no:15,date:"6/16(火)",time:"7:00",home:"サウジアラビア",away:"ウルグアイ",venue:"アトランタ",stage:"group",broadcast:["DAZN"]},
+{no:16,date:"6/16(火)",time:"11:00",home:"イラン",away:"ニュージーランド",venue:"シアトル",stage:"group",broadcast:["DAZN"]},
+{no:17,date:"6/17(水)",time:"4:00",home:"フランス",away:"セネガル",venue:"ニュージャージー",stage:"group",broadcast:["フジテレビ","DAZN"]},
+{no:18,date:"6/17(水)",time:"7:00",home:"イラク",away:"ノルウェー",venue:"ボストン",stage:"group",broadcast:["DAZN"]},
+{no:19,date:"6/17(水)",time:"10:00",home:"アルゼンチン",away:"アルジェリア",venue:"カンザスシティ",stage:"group",broadcast:["DAZN"]},
+{no:20,date:"6/17(水)",time:"13:00",home:"オーストリア",away:"ヨルダン",venue:"カンザスシティ",stage:"group",broadcast:["DAZN"]},
+{no:21,date:"6/18(木)",time:"2:00",home:"ポルトガル",away:"DRコンゴ",venue:"ヒューストン",stage:"group",broadcast:["DAZN"]},
+{no:22,date:"6/18(木)",time:"5:00",home:"イングランド",away:"クロアチア",venue:"トロント",stage:"group",broadcast:["DAZN"]},
+{no:23,date:"6/18(木)",time:"8:00",home:"ガーナ",away:"パナマ",venue:"ダラス",stage:"group",broadcast:["DAZN"]},
+{no:24,date:"6/18(木)",time:"11:00",home:"ウズベキスタン",away:"コロンビア",venue:"メキシコシティ",stage:"group",broadcast:["DAZN"]},
+{no:25,date:"6/19(金)",time:"1:00",home:"チェコ",away:"南アフリカ",venue:"アトランタ",stage:"group",broadcast:["日本テレビ","DAZN"]},
+{no:26,date:"6/19(金)",time:"4:00",home:"スイス",away:"ボスニア・ヘルツェゴビナ",venue:"ロサンゼルス",stage:"group",broadcast:["DAZN"]},
+{no:27,date:"6/19(金)",time:"7:00",home:"カナダ",away:"カタール",venue:"バンクーバー",stage:"group",broadcast:["DAZN"]},
+{no:28,date:"6/19(金)",time:"10:00",home:"メキシコ",away:"韓国",venue:"グアダラハラ",stage:"group",broadcast:["NHK","BSP4K","DAZN"]},
+{no:29,date:"6/20(土)",time:"4:00",home:"アメリカ",away:"オーストラリア",venue:"シアトル",stage:"group",broadcast:["NHK","BSP4K","DAZN"]},
+{no:30,date:"6/20(土)",time:"7:00",home:"スコットランド",away:"モロッコ",venue:"ボストン",stage:"group",broadcast:["フジテレビ","DAZN"]},
+{no:31,date:"6/20(土)",time:"9:30",home:"ブラジル",away:"ハイチ",venue:"フィラデルフィア",stage:"group",broadcast:["NHK","BSP4K","DAZN"]},
+{no:32,date:"6/20(土)",time:"12:00",home:"トルコ",away:"パラグアイ",venue:"サンフランシスコ",stage:"group",broadcast:["DAZN"]},
+{no:33,date:"6/21(日)",time:"2:00",home:"オランダ",away:"スウェーデン",venue:"ヒューストン",stage:"group",broadcast:["NHK","BSP4K","DAZN"]},
+{no:34,date:"6/21(日)",time:"5:00",home:"ドイツ",away:"コートジボワール",venue:"トロント",stage:"group",broadcast:["日本テレビ","DAZN"]},
+{no:35,date:"6/21(日)",time:"9:00",home:"エクアドル",away:"キュラソー",venue:"カンザスシティ",stage:"group",broadcast:["DAZN"]},
+{no:36,date:"6/21(日)",time:"13:00",home:"チュニジア",away:"日本",venue:"モンテレー",stage:"group",japan:true,broadcast:["NHK BS","日本テレビ","DAZN"]},
+{no:37,date:"6/22(月)",time:"1:00",home:"スペイン",away:"サウジアラビア",venue:"アトランタ",stage:"group",broadcast:["NHK","BSP4K","DAZN"]},
+{no:38,date:"6/22(月)",time:"4:00",home:"ベルギー",away:"イラン",venue:"ロサンゼルス",stage:"group",broadcast:["DAZN"]},
+{no:39,date:"6/22(月)",time:"7:00",home:"ウルグアイ",away:"カーボベルデ",venue:"マイアミ",stage:"group",broadcast:["DAZN"]},
+{no:40,date:"6/22(月)",time:"10:00",home:"ニュージーランド",away:"エジプト",venue:"バンクーバー",stage:"group",broadcast:["DAZN"]},
+{no:41,date:"6/23(火)",time:"2:00",home:"アルゼンチン",away:"オーストリア",venue:"グアダラハラ",stage:"group",broadcast:["DAZN"]},
+{no:42,date:"6/23(火)",time:"6:00",home:"フランス",away:"イラク",venue:"フィラデルフィア",stage:"group",broadcast:["DAZN"]},
+{no:43,date:"6/23(火)",time:"9:00",home:"ノルウェー",away:"セネガル",venue:"ニュージャージー",stage:"group",broadcast:["NHK","BSP4K","DAZN"]},
+{no:44,date:"6/23(火)",time:"12:00",home:"ヨルダン",away:"アルジェリア",venue:"サンフランシスコ",stage:"group",broadcast:["DAZN"]},
+{no:45,date:"6/24(水)",time:"2:00",home:"ポルトガル",away:"ウズベキスタン",venue:"ヒューストン",stage:"group",broadcast:["NHK","BSP4K","DAZN"]},
+{no:46,date:"6/24(水)",time:"5:00",home:"イングランド",away:"ガーナ",venue:"ボストン",stage:"group",broadcast:["DAZN"]},
+{no:47,date:"6/24(水)",time:"8:00",home:"パナマ",away:"クロアチア",venue:"トロント",stage:"group",broadcast:["フジテレビ","DAZN"]},
+{no:48,date:"6/24(水)",time:"11:00",home:"コロンビア",away:"DRコンゴ",venue:"グアダラハラ",stage:"group",broadcast:["日本テレビ","DAZN"]},
+{no:49,date:"6/25(木)",time:"4:00",home:"スイス",away:"カナダ",venue:"バンクーバー",stage:"group",broadcast:["NHK","BSP4K","DAZN"]},
+{no:50,date:"6/25(木)",time:"4:00",home:"ボスニア",away:"カタール",venue:"シアトル",stage:"group",broadcast:["DAZN"]},
+{no:51,date:"6/25(木)",time:"7:00",home:"スコットランド",away:"ブラジル",venue:"マイアミ",stage:"group",broadcast:["DAZN"]},
+{no:52,date:"6/25(木)",time:"7:00",home:"モロッコ",away:"ハイチ",venue:"アトランタ",stage:"group",broadcast:["DAZN"]},
+{no:53,date:"6/25(木)",time:"10:00",home:"チェコ",away:"メキシコ",venue:"メキシコシティ",stage:"group",broadcast:["NHK","BSP4K","DAZN"]},
+{no:54,date:"6/25(木)",time:"10:00",home:"南アフリカ",away:"韓国",venue:"モンテレー",stage:"group",broadcast:["DAZN"]},
+{no:55,date:"6/26(金)",time:"5:00",home:"エクアドル",away:"ドイツ",venue:"ニュージャージー",stage:"group",broadcast:["DAZN"]},
+{no:56,date:"6/26(金)",time:"5:00",home:"キュラソー",away:"コートジボワール",venue:"フィラデルフィア",stage:"group",broadcast:["DAZN"]},
+{no:57,date:"6/26(金)",time:"8:00",home:"日本",away:"スウェーデン",venue:"ダラス",stage:"group",japan:true,broadcast:["NHK","BSP4K","DAZN"]},
+{no:58,date:"6/26(金)",time:"8:00",home:"チュニジア",away:"オランダ",venue:"カンザスシティ",stage:"group",broadcast:["DAZN"]},
+{no:59,date:"6/26(金)",time:"11:00",home:"トルコ",away:"アメリカ",venue:"ロサンゼルス",stage:"group",broadcast:["日本テレビ","DAZN"]},
+{no:60,date:"6/26(金)",time:"11:00",home:"パラグアイ",away:"オーストラリア",venue:"サンフランシスコ",stage:"group",broadcast:["DAZN"]},
+{no:61,date:"6/27(土)",time:"4:00",home:"ノルウェー",away:"フランス",venue:"ボストン",stage:"group",broadcast:["NHK","BSP4K","DAZN"]},
+{no:62,date:"6/27(土)",time:"4:00",home:"セネガル",away:"イラク",venue:"トロント",stage:"group",broadcast:["DAZN"]},
+{no:63,date:"6/27(土)",time:"9:00",home:"カーボベルデ",away:"サウジアラビア",venue:"ヒューストン",stage:"group",broadcast:["DAZN"]},
+{no:64,date:"6/27(土)",time:"9:00",home:"ウルグアイ",away:"スペイン",venue:"グアダラハラ",stage:"group",broadcast:["日本テレビ","DAZN"]},
+{no:65,date:"6/27(土)",time:"12:00",home:"エジプト",away:"イラン",venue:"シアトル",stage:"group",broadcast:["DAZN"]},
+{no:66,date:"6/27(土)",time:"12:00",home:"ニュージーランド",away:"ベルギー",venue:"バンクーバー",stage:"group",broadcast:["フジテレビ","DAZN"]},
+{no:67,date:"6/28(日)",time:"6:00",home:"パナマ",away:"イングランド",venue:"ニュージャージー",stage:"group",broadcast:["DAZN"]},
+{no:68,date:"6/28(日)",time:"6:00",home:"クロアチア",away:"ガーナ",venue:"フィラデルフィア",stage:"group",broadcast:["DAZN"]},
+{no:69,date:"6/28(日)",time:"8:30",home:"コロンビア",away:"ポルトガル",venue:"マイアミ",stage:"group",broadcast:["フジテレビ","DAZN"]},
+{no:70,date:"6/28(日)",time:"8:30",home:"DRコンゴ",away:"ウズベキスタン",venue:"アトランタ",stage:"group",broadcast:["DAZN"]},
+{no:71,date:"6/28(日)",time:"11:00",home:"アルジェリア",away:"オーストリア",venue:"カンザスシティ",stage:"group",broadcast:["DAZN"]},
+{no:72,date:"6/28(日)",time:"11:00",home:"ヨルダン",away:"アルゼンチン",venue:"ダラス",stage:"group",broadcast:["NHK","BSP4K","DAZN"]},
+{no:73,date:"6/29(月)",time:"4:00",home:"A2位",away:"B2位",venue:"ロサンゼルス",stage:"knockout",broadcast:["DAZN"]},
+{no:74,date:"6/30(火)",time:"5:30",home:"E1位",away:"A/B/C/D/F3位",venue:"ボストン",stage:"knockout",broadcast:["DAZN"]},
+{no:75,date:"6/30(火)",time:"10:00",home:"F1位",away:"C2位",venue:"モンテレー",stage:"knockout",broadcast:["DAZN"]},
+{no:76,date:"6/30(火)",time:"2:00",home:"C1位",away:"F2位",venue:"ヒューストン",stage:"knockout",broadcast:["DAZN"]},
+{no:77,date:"7/1(水)",time:"TBD",home:"TBD",away:"TBD",venue:"TBD",stage:"knockout",broadcast:["DAZN"]},
+{no:78,date:"7/2(木)",time:"TBD",home:"TBD",away:"TBD",venue:"TBD",stage:"knockout",broadcast:["DAZN"]},
+{no:79,date:"7/3(金)",time:"TBD",home:"TBD",away:"TBD",venue:"TBD",stage:"knockout",broadcast:["DAZN"]},
+{no:80,date:"7/4(土)",time:"TBD",home:"TBD（R16）",away:"TBD",venue:"TBD",stage:"knockout",broadcast:["NHK","DAZN"]},
+{no:81,date:"7/5(日)",time:"TBD",home:"TBD（R16）",away:"TBD",venue:"TBD",stage:"knockout",broadcast:["NHK","DAZN"]},
+{no:82,date:"7/6(月)",time:"TBD",home:"TBD（R16）",away:"TBD",venue:"TBD",stage:"knockout",broadcast:["NHK","DAZN"]},
+{no:83,date:"7/7(火)",time:"TBD",home:"TBD（R16）",away:"TBD",venue:"TBD",stage:"knockout",broadcast:["NHK","DAZN"]},
+{no:84,date:"7/9(木)",time:"TBD",home:"TBD（QF）",away:"TBD",venue:"TBD",stage:"knockout",broadcast:["NHK","DAZN"]},
+{no:85,date:"7/10(金)",time:"TBD",home:"TBD（QF）",away:"TBD",venue:"TBD",stage:"knockout",broadcast:["NHK","DAZN"]},
+{no:86,date:"7/11(土)",time:"TBD",home:"TBD（QF）",away:"TBD",venue:"TBD",stage:"knockout",broadcast:["NHK","DAZN"]},
+{no:87,date:"7/14(火)",time:"TBD",home:"TBD（SF）",away:"TBD",venue:"TBD",stage:"knockout",broadcast:["NHK","BSP4K","DAZN"]},
+{no:88,date:"7/15(水)",time:"TBD",home:"TBD（SF）",away:"TBD",venue:"TBD",stage:"knockout",broadcast:["NHK","BSP4K","DAZN"]},
+{no:89,date:"7/18(土)",time:"TBD",home:"TBD（3位決定戦）",away:"TBD",venue:"マイアミ",stage:"knockout",broadcast:["NHK","BSP4K","DAZN"]},
+{no:90,date:"7/19(日)",time:"TBD",home:"TBD（決勝）",away:"TBD",venue:"ニュージャージー",stage:"knockout",broadcast:["NHK","BSP4K","DAZN"]},
+];
+
+function badgeClass(b){
+  if(b==="NHK")return"b-nhk";
+  if(b==="NHK BS"||b==="BSP4K")return"b-bs";
+  if(b==="日本テレビ")return"b-ntv";
+  if(b==="フジテレビ")return"b-fuji";
+  return"b-dazn";
+}
+
+let currentFilter="all";
+let currentSearch="";
+
+function render(){
+  const q=currentSearch.trim().toLowerCase();
+  const filtered=matches.filter(m=>{
+    const matchStr=(m.home+m.away+m.venue).toLowerCase();
+    const searchOk=!q||matchStr.includes(q)||m.broadcast.some(b=>b.toLowerCase().includes(q));
+    if(!searchOk)return false;
+    if(currentFilter==="all")return true;
+    if(currentFilter==="group")return m.stage==="group";
+    if(currentFilter==="knockout")return m.stage==="knockout";
+    if(currentFilter==="japan")return m.japan===true;
+    if(currentFilter==="nhk")return m.broadcast.some(b=>b.includes("NHK"));
+    return true;
+  });
+  const list=document.getElementById("list");
+  const noRes=document.getElementById("noResults");
+  document.getElementById("count").textContent=filtered.length+"試合";
+  if(filtered.length===0){list.innerHTML="";noRes.style.display="block";return;}
+  noRes.style.display="none";
+  let html="";
+  let lastDate="";
+  let lastStage="";
+  filtered.forEach(m=>{
+    if(m.stage!==lastStage){
+      const stageLabel=m.stage==="group"?"グループステージ":"ノックアウトステージ";
+      html+=`<div class="stage-title">${stageLabel}</div>`;
+      lastStage=m.stage;lastDate="";
+    }
+    if(m.date!==lastDate){
+      html+=`<div class="date-head">${m.date}</div>`;
+      lastDate=m.date;
+    }
+    const bBadges=m.broadcast.map(b=>`<span class="badge ${badgeClass(b)}">${b}</span>`).join("");
+    const japanBadge=m.japan?`<span class="badge b-japan">日本戦</span>`:"";
+    html+=`<div class="card ${m.japan?'japan':''}">
+      <div class="row1">
+        <span class="time">${m.time}</span>
+        <span class="venue">${m.venue}</span>
+      </div>
+      <div class="teams">${m.home}<span class="vs">vs</span>${m.away}</div>
+      <div class="badges">${japanBadge}${bBadges}</div>
+    </div>`;
+  });
+  list.innerHTML=html;
+}
+
+document.getElementById("stageFilter").addEventListener("click",e=>{
+  const btn=e.target.closest("button");
+  if(!btn)return;
+  document.querySelectorAll("#stageFilter button").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  currentFilter=btn.dataset.stage;
+  render();
+});
+document.getElementById("search").addEventListener("input",e=>{
+  currentSearch=e.target.value;render();
+});
+render();
+</script>
+</body>
+</html>
